@@ -6,5 +6,5 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
 
-  has_many :task
+  has_many :tasks
 end

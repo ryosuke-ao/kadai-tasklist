@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy,:edit,:update]
+  before_action :correct_user, only: [:destroy,:edit,:update,:show]
   def index
     @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(10)
   end
@@ -57,8 +57,8 @@ class TasksController < ApplicationController
   end
 
   def correct_user
-    @micropost = current_user.microposts.find_by(id: params[:id])
-    unless @micropost
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
       redirect_to root_url
     end
   end

@@ -7,4 +7,20 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :tasks
+  has_many :favorites
+  has_many :tofavs, through: :favorites, source: :task
+  
+  def fav(task)
+    self.favorites.find_or_create_by(task_id: task.id)
+  end
+  
+  def unfav(task)
+    favorite = self.favorites.find_by(task_id: task.id)
+    favorite.destroy if favorite
+  end
+  
+  def fav?(task)
+    self.tofavs.include?(task)
+  end
+  
 end
